@@ -21,6 +21,7 @@ start_here:
 	bsr start
 
 .globl wr_diag
+.globl putch
 
 # How do we do online comments in this flavor of the gnu assembler?
 # ; acts to separate statements
@@ -28,13 +29,6 @@ start_here:
 # using // does not cut it.
 # neither @ nor ! does it
 #  nor : or "
-#
-# ************************
-# I finally give up and look at NetBSD sources.
-# *** the pipe character "|" is the thing to use.
-# Who would have guessed.
-# Apparently little (i.e. none) concern is given to making the
-# gnu assembler consistent or useful to humans.
 
 wr_diag:
 	movec %dfc,%a0
@@ -44,6 +38,29 @@ wr_diag:
 	movesb %d0,0x70000000
 	movec %a0,%dfc
 	rts
+
+# Send a character to serial A, spin until Tx is ready
+# 0xfffe000         ; SCC-A control
+
+# We have a timeout on the poll for status
+# Then a short timeout to let the SCC recover
+putch:
+		moveb %sp@(7),%d0
+		moveq #-1,%d2
+
+poll_1:
+		moveb 0xfffe000,%d1
+		btst #2,%d1
+		dbne %d2,poll_1
+
+recover:
+		moveq #15,%d2
+		dbf %d2,recover		| recovery delay
+
+		moveb %d0,0xfffe002
+		/* bogus write to other channel */
+		moveb %d0,0xfffe006
+		rts
 
 /*
 loop:	bra	loop

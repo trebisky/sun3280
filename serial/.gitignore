@@ -1,0 +1,9 @@
+*.o
+*.elf
+*.dis
+OLD
+OLD/*
+zzz
+try
+*.dump
+*.img

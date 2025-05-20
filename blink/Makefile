@@ -15,7 +15,7 @@ OBJS = start.o blink.o
 all: blink.bin blink.dump
 
 install: blink.bin
-	cp blink.bin /var/lib/tftpboot/sun3_blink.bin
+	cp blink.bin /var/lib/tftpboot/sun3_test.bin
 
 # Here is the crucial part, linking.
 #  the -s switch says to strip the symbol table.
