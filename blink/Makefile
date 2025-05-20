@@ -2,7 +2,7 @@
 #
 # Tom Trebisky 5/19/2025
 #
-# This is from a Fedora package for F34 as of 2-2022
+# This is from a Fedora package
 #CC = m68k-linux-gnu-gcc -m68020 -O2 -fno-builtin
 CC = m68k-linux-gnu-gcc -m68020 -fno-builtin
 
