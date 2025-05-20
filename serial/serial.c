@@ -13,6 +13,7 @@ typedef volatile unsigned char vu_char;
 
 void delay_x ( void );
 void wr_diag ( int );
+void con ( void );
 void putch ( int );
 
 /* Without any assembly language startup file, this
@@ -23,6 +24,8 @@ start ( void )
 {
 		// All on
 		wr_diag ( 0 );
+
+		// con ();
 
 		for ( ;; ) {
 			putch ( 'X' );
