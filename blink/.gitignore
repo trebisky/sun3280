@@ -1,0 +1,10 @@
+*.o
+*.elf
+*.dis
+*.bin
+OLD
+OLD/*
+zzz
+try
+*.dump
+*.img
