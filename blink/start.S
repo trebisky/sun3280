@@ -20,6 +20,16 @@ start_here:
 	movew #0x2700,%sr
 	bsr start
 
+.globl nuke_ints
+
+# Nicer to turn off just level 5 and 7 than
+#  to turn off all interrupts.
+nuke_ints:
+#	moveq #0, %d0
+	moveq #0x1f, %d0
+	moveb %d0, 0x0fe0a000
+	rts
+
 .globl wr_diag
 
 # How do we do online comments in this flavor of the gnu assembler?
@@ -45,9 +55,9 @@ wr_diag:
 	movec %a0,%dfc
 	rts
 
-/*
-loop:	bra	loop
-*/
+.globl spin
+
+spin:	bra	spin
 
 # Idiotic junk to avoid complaints from linker
 .section        .note.GNU-stack,"",%progbits

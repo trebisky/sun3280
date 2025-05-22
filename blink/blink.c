@@ -23,9 +23,10 @@ void wr_diag ( int );
 void test1 ( void )
 {
 	for ( ;; ) {
-		wr_diag ( 0xff );	// all off
+		// wr_diag ( 0xff );	// all off
+		wr_diag ( 0xaa );
 		delay_x ();
-		wr_diag ( 0x3a );	// top 2 on
+		wr_diag ( 0x55 );
 		delay_x ();
 	}
 }
@@ -42,12 +43,40 @@ void test2 ( void )
 			;
 }
 
-/* Without any assembly language startup file, this
- *  MUST be first.
+/* The Rom is still getting interrupts from the TOD clock,
+ * and uses them to blink an LED, which interferes with
+ * what we want to do.
+ * We can shut this off via the interrupt register,
+ * or we can do this and disable interrupts in the 7170
+ * chip itself.
  */
+
+#define	TOD_BASE	0xfe06000
+
+struct timer {
+		char _regs[16];
+		vu_char	isr;		/* 0x10 */
+		vu_char control;	/* 0x11 */
+};
+
+#define CTL_RUN		0x08
+#define CTL_IE		0x10
+
+void
+kill_timer ( void )
+{
+		struct timer *tp;
+
+		tp = (struct timer *) TOD_BASE;
+
+		tp->control = 0;
+}
+
 void
 start ( void )
 {
+		// nuke_ints ();
+		kill_timer ();
 		test1 ();
 		// test2 ();
 }

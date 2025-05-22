@@ -54,14 +54,20 @@ con:
 		movel #0xdeadbeef, %d2
 		bras	con
 
-.globl putch
+.globl putchXX
+
+putchXX:
+		moveb #'Q', %d0
+#		moveb %d0,0x0fe02002 - no
+		moveb %d0,0x0fe02006
+		bras putch
 
 # Send a character to serial A, spin until Tx is ready
 # 0xfffe000         ; SCC-A control
 
 # We have a timeout on the poll for status
 # Then a short timeout to let the SCC recover
-putch:
+putchX:
 		moveb %sp@(7), %d0		| get the character
 		moveb #'Q', %d0
 
@@ -71,13 +77,36 @@ poll_1:
 		btst #2,%d1
 		dbne %d2,poll_1
 
-recover:
+recover_l:
 		moveq #15,%d2
-		dbf %d2,recover		| recovery delay
+		dbf %d2,recover_l		| recovery delay
 
 		moveb %d0,0xfffe002
 		/* bogus write to other channel */
 		moveb %d0,0xfffe006
+		rts
+
+.globl recoveryX
+
+# This assembled to weird bad code
+recoveryX:
+		moveq #15,%d0
+		dbf %d0,recoveryX
+		rts
+
+.globl recovery
+
+recovery:
+		nop
+		nop
+		nop
+		nop
+		nop
+		nop
+		nop
+		nop
+		nop
+		nop
 		rts
 
 /*

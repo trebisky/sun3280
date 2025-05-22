@@ -7,7 +7,7 @@
 CC = m68k-linux-gnu-gcc -m68020 -fno-builtin
 
 AS = m68k-linux-gnu-as -m68020
-LD = m68k-linux-gnu-ld
+LD = m68k-linux-gnu-ld --no-warn-rwx-segments
 DUMP = m68k-linux-gnu-objdump -d
 
 OBJS = start.o serial.o
