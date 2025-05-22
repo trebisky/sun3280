@@ -1,0 +1,52 @@
+#!/usr/bin/python
+
+import serial
+
+port = "/dev/ttyUSB0"
+
+# =================
+
+def fetch ( outfile, cmd ) :
+	#print ( "Send: " + cmd )
+	ser.write ( cmd.encode ( 'ascii' ) )
+
+	# first we get echo
+	line = ser.readline().decode('ascii').strip()
+	print ( "Prompt: ", line )
+
+	# next we get what we want, after a timeout
+	line = ser.readline().decode('ascii').strip()
+	#line = ""
+	#while ( True ) :
+	#	x = ser.readline().decode('ascii').strip()
+	#	line = line + x
+	#	print ( "Got: ", line )
+	#	if line.endswith ( "?" ) :
+	#		break
+	print ( "Full: ", line )
+	outfile.write ( line + "\n" )
+
+def dump_pages ( file, max ) :
+	max = 4*128
+	f = open ( file, "w" )
+	fetch ( f, ".\r" )
+	fetch ( f, "p 0fc00000\r" )
+	for x in range(max):
+		print ( "Get: ", x )
+		fetch ( f, "\r" )
+	f.close ()
+
+# =================
+
+#print ( port )
+
+#ser = serial.Serial ( port, 9600, timeout=5 )
+#ser = serial.Serial ( port, 9600, timeout=1 )
+ser = serial.Serial ( port, 9600, timeout=0.1 )
+#print ( ser.name );
+
+dump_pages ( "puller.out", 8*1024 )
+
+ser.close ()
+
+# THE END
