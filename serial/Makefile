@@ -21,10 +21,10 @@ install: serial.bin
 #  the -s switch says to strip the symbol table.
 #  note the handy binary image output option!
 serial.bin:	$(OBJS)
-	$(LD) -T sun3.lds --oformat binary -s -o serial.bin $(OBJS)
+	$(LD) -T basic.lds --oformat binary -s -o serial.bin $(OBJS)
 
 serial.elf:	$(OBJS)
-	$(LD) -T sun3.lds -s -o serial.elf $(OBJS)
+	$(LD) -T basic.lds -s -o serial.elf $(OBJS)
 
 serial.dump:	serial.elf
 	$(DUMP) serial.elf >serial.dump

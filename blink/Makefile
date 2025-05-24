@@ -21,10 +21,10 @@ install: blink.bin
 #  the -s switch says to strip the symbol table.
 #  note the handy binary image output option!
 blink.bin:	$(OBJS)
-	$(LD) -T sun3.lds --oformat binary -s -o blink.bin $(OBJS)
+	$(LD) -T basic.lds --oformat binary -s -o blink.bin $(OBJS)
 
 blink.elf:	$(OBJS)
-	$(LD) -T sun3.lds -s -o blink.elf $(OBJS)
+	$(LD) -T basic.lds -s -o blink.elf $(OBJS)
 
 blink.dump:	blink.elf
 	$(DUMP) blink.elf >blink.dump

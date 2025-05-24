@@ -1,0 +1,180 @@
+# Here is the SegMap, dumped by the "m" rom command
+# The "m" command quits after dumping 2K entries.
+# In other words, it only dumps the current context.
+
+# The Segmap is 16K all told, but is divided into 8 2K sections,
+# one for each context.
+
+# One context (2K Segmap registers) maps 2048 * 128K = 256M of address.
+# This is the per-process address space on a sun3 (256M)
+# A process only gets to use 28 bits
+
+# The map begins with 64 entries.
+# Each maps 128K, so this covers 64*128K = 8M of memory
+# (Our hardware actually has 16M, why is it not all mapped?)
+
+# After this we get 0xff entries on until address 0FE00000
+
+# Then there are a final 16 entries with curious mapping
+# 16 entries maps 2M of memory
+
+# So we have a 256M address space with the first 8M mapped
+# to ram, and the final 2M mapped to "special things"
+#
+# the central 246M are vacant.
+#
+# In other words, only 80 Segmap values are "interesting"
+# and in truth only the final 16 are really interesting
+
+# Each Seg references a PMEG (a group of 16 PMAP registers)
+
+# here is the first part of the first PMEG for the RAM addresses
+# the rest of the PMAP registers just continue in sequence.
+# The control bits in the upper byte are:
+# Valid, Write allowed, not supervisor restricted, then a reserved bit is set
+# type = 00 (main memory), accessed and modified.
+# Presumably they are accessed and modified because a
+#  memory diagnostic has been run on all of them.
+
+PageMap 00000000 [00]: D3000000?
+PageMap 00002000 [00]: D3000001?
+PageMap 00004000 [00]: D3000002?
+PageMap 00006000 [00]: D3000003?
+
+
+# Let's look at the PMEG for the central, prsumably invalid addresses
+# It looks like this.  The main thing is that the upper bit is 0,
+# which indicates that the page is invalid
+
+PageMap 00800000 [FF]: 20000000?
+PageMap 00802000 [FF]: 20000000?
+PageMap 00804000 [FF]: 20000000?
+PageMap 00806000 [FF]: 20000000?
+PageMap 00808000 [FF]: 20000000?
+PageMap 0080A000 [FF]: 20000000?
+PageMap 0080C000 [FF]: 20000000?
+PageMap 0080E000 [FF]: 20000000?
+PageMap 00810000 [FF]: 20000000?
+PageMap 00812000 [FF]: 20000000?
+PageMap 00814000 [FF]: 20000000?
+PageMap 00816000 [FF]: 20000000?
+PageMap 00818000 [FF]: 20000000?
+PageMap 0081A000 [FF]: 20000000?
+PageMap 0081C000 [FF]: 20000000?
+PageMap 0081E000 [FF]: 20000000?
+
+# Finally we get the "interesting" addresses for the last 2M
+# I am going to analyze those PAGE map registers in their own file.
+# (that files is seg2.out)
+
+SegMap 0FE00000: FE?
+SegMap 0FE20000: FD?
+SegMap 0FE40000: FC?
+SegMap 0FE60000: FB?
+SegMap 0FE80000: FA?
+SegMap 0FEA0000: F9?
+SegMap 0FEC0000: FF? -- invalid
+SegMap 0FEE0000: F7?
+SegMap 0FF00000: F6?
+SegMap 0FF20000: F5?
+SegMap 0FF40000: F4?
+SegMap 0FF60000: F3?
+SegMap 0FF80000: FF -- invalid
+SegMap 0FFA0000: FF -- invalid
+SegMap 0FFC0000: FF -- invalid
+SegMap 0FFE0000: F8?
+
+# The Segmap in order follows:
+
+SegMap 00000000: 00?
+SegMap 00020000: 01?
+SegMap 00040000: 02?
+SegMap 00060000: 03?
+SegMap 00080000: 04?
+SegMap 000A0000: 05?
+SegMap 000C0000: 06?
+SegMap 000E0000: 07?
+SegMap 00100000: 08?
+SegMap 00120000: 09?
+SegMap 00140000: 0A?
+SegMap 00160000: 0B?
+SegMap 00180000: 0C?
+SegMap 001A0000: 0D?
+SegMap 001C0000: 0E?
+SegMap 001E0000: 0F?
+SegMap 00200000: 10?
+SegMap 00220000: 11?
+SegMap 00240000: 12?
+SegMap 00260000: 13?
+SegMap 00280000: 14?
+SegMap 002A0000: 15?
+SegMap 002C0000: 16?
+SegMap 002E0000: 17?
+SegMap 00300000: 18?
+SegMap 00320000: 19?
+SegMap 00340000: 1A?
+SegMap 00360000: 1B?
+SegMap 00380000: 1C?
+SegMap 003A0000: 1D?
+SegMap 003C0000: 1E?
+SegMap 003E0000: 1F?
+SegMap 00400000: 20?
+SegMap 00420000: 21?
+SegMap 00440000: 22?
+SegMap 00460000: 23?
+SegMap 00480000: 24?
+SegMap 004A0000: 25?
+SegMap 004C0000: 26?
+SegMap 004E0000: 27?
+SegMap 00500000: 28?
+SegMap 00520000: 29?
+SegMap 00540000: 2A?
+SegMap 00560000: 2B?
+SegMap 00580000: 2C?
+SegMap 005A0000: 2D?
+SegMap 005C0000: 2E?
+SegMap 005E0000: 2F?
+SegMap 00600000: 30?
+SegMap 00620000: 31?
+SegMap 00640000: 32?
+SegMap 00660000: 33?
+SegMap 00680000: 34?
+SegMap 006A0000: 35?
+SegMap 006C0000: 36?
+SegMap 006E0000: 37?
+SegMap 00700000: 38?
+SegMap 00720000: 39?
+SegMap 00740000: 3A?
+SegMap 00760000: 3B?
+SegMap 00780000: 3C?
+SegMap 007A0000: 3D?
+SegMap 007C0000: 3E?
+SegMap 007E0000: 3F?
+
+SegMap 00800000: FF?
+SegMap 00820000: FF?
+SegMap 00840000: FF?
+....
+....
+SegMap 0FDA0000: FF?
+SegMap 0FDC0000: FF?
+SegMap 0FDE0000: FF?
+
+SegMap 0FE00000: FE?
+SegMap 0FE20000: FD?
+SegMap 0FE40000: FC?
+SegMap 0FE60000: FB?
+SegMap 0FE80000: FA?
+SegMap 0FEA0000: F9?
+SegMap 0FEC0000: FF?
+SegMap 0FEE0000: F7?
+SegMap 0FF00000: F6?
+SegMap 0FF20000: F5?
+SegMap 0FF40000: F4?
+SegMap 0FF60000: F3?
+SegMap 0FF80000: FF?
+SegMap 0FFA0000: FF?
+SegMap 0FFC0000: FF?
+SegMap 0FFE0000: F8?
+
+# THE END

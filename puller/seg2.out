@@ -1,0 +1,317 @@
+# Here is an analysis of the final 2M of our address space
+
+SegMap 0FE00000: FE?
+SegMap 0FE20000: FD?
+SegMap 0FE40000: FC?
+SegMap 0FE60000: FB?
+SegMap 0FE80000: FA?
+SegMap 0FEA0000: F9?
+SegMap 0FEC0000: FF? -- invalid
+SegMap 0FEE0000: F7?
+SegMap 0FF00000: F6?
+SegMap 0FF20000: F5?
+SegMap 0FF40000: F4?
+SegMap 0FF60000: F3?
+SegMap 0FF80000: FF -- invalid
+SegMap 0FFA0000: FF -- invalid
+SegMap 0FFC0000: FF -- invalid
+SegMap 0FFE0000: F8?
+
+# Note in the following, the value in square brackets is the Segmap
+# entry that got us to each PMEG, which is handy.
+# Note also that the monitor "p" command does not go through
+# the PMAP in order.  It goes through virtual addresses in order.
+# Depending on how the MMU is set up, this may lead us to the
+# same PMAP entry multiple times, as it does for invalid sections
+
+# This first PMEG is especially interesting as it contains entries
+# with the type bits = 01 (IO!)
+
+# D7 = valid, writeable, not super, type 01, modified and accessed
+# D6 = valid, writeable, not super, type 01, accessed, not modified
+# D4 = valid, writeable, not super, type 01, not accessed, not modified
+# D0 = valid, writeable, not super, type 00, not accessed, not modified
+# F0 = valid, writeable, super, type 00, not accessed, not modified
+
+PageMap 0FE00000 [FE]: D7000000?	-- IO: Kb / mouse
+PageMap 0FE02000 [FE]: D7000010?	-- IO: SCC
+PageMap 0FE04000 [FE]: D6000020?	-- IO: EEPROM
+PageMap 0FE06000 [FE]: D7000030?	-- IO: TOD 7170
+PageMap 0FE08000 [FE]: D7000040?	-- IO: Mem error regs
+PageMap 0FE0A000 [FE]: D7000050?	-- IO: Interrupt register
+PageMap 0FE0C000 [FE]: D7000060?	-- IO: Intel ethernet
+PageMap 0FE0E000 [FE]: D4000000?	-- IO: Kb/ mouse !!
+PageMap 0FE10000 [FE]: D4000090?	-- IO: AMD lance ethernet
+PageMap 0FE12000 [FE]: D40000A0?	-- IO: scsi
+PageMap 0FE14000 [FE]: D40000E0?	-- IO: encryption
+PageMap 0FE16000 [FE]: D40000F0?	-- IO: ECC memory regs
+PageMap 0FE18000 [FE]: D007F980?
+PageMap 0FE1A000 [FE]: D007F8E0?
+PageMap 0FE1C000 [FE]: F0000FEE?
+PageMap 0FE1E000 [FE]: F0000FEF?
+
+# D0 = valid, writeable, not super, type 00, not accessed, not modified
+
+PageMap 0FE20000 [FD]: D007F800?
+PageMap 0FE22000 [FD]: D007F801?
+PageMap 0FE24000 [FD]: D007F802?
+PageMap 0FE26000 [FD]: D007F803?
+PageMap 0FE28000 [FD]: D007F804?
+PageMap 0FE2A000 [FD]: D007F805?
+PageMap 0FE2C000 [FD]: D007F806?
+PageMap 0FE2E000 [FD]: D007F807?
+PageMap 0FE30000 [FD]: D007F808?
+PageMap 0FE32000 [FD]: D007F809?
+PageMap 0FE34000 [FD]: D007F80A?
+PageMap 0FE36000 [FD]: D007F80B?
+PageMap 0FE38000 [FD]: D007F80C?
+PageMap 0FE3A000 [FD]: D007F80D?
+PageMap 0FE3C000 [FD]: D007F80E?
+PageMap 0FE3E000 [FD]: D007F80F?
+
+PageMap 0FE40000 [FC]: D007F810?
+PageMap 0FE42000 [FC]: D007F811?
+PageMap 0FE44000 [FC]: D007F812?
+PageMap 0FE46000 [FC]: D007F813?
+PageMap 0FE48000 [FC]: D007F814?
+PageMap 0FE4A000 [FC]: D007F815?
+PageMap 0FE4C000 [FC]: D007F816?
+PageMap 0FE4E000 [FC]: D007F817?
+PageMap 0FE50000 [FC]: D007F818?
+PageMap 0FE52000 [FC]: D007F819?
+PageMap 0FE54000 [FC]: D007F81A?
+PageMap 0FE56000 [FC]: D007F81B?
+PageMap 0FE58000 [FC]: D007F81C?
+PageMap 0FE5A000 [FC]: D007F81D?
+PageMap 0FE5C000 [FC]: D007F81E?
+PageMap 0FE5E000 [FC]: D007F81F?
+
+# D3 = valid, writeable, not super, type 00, accessed and modified
+
+PageMap 0FE60000 [FB]: D30007FF?
+PageMap 0FE62000 [FB]: F0000FB1?
+PageMap 0FE64000 [FB]: 20000000?	- invalid
+PageMap 0FE66000 [FB]: 20000000?	- invalid
+PageMap 0FE68000 [FB]: 20000000?	- invalid
+PageMap 0FE6A000 [FB]: 20000000?	- invalid
+PageMap 0FE6C000 [FB]: 20000000?	- invalid
+PageMap 0FE6E000 [FB]: 20000000?	- invalid
+PageMap 0FE70000 [FB]: 20000000?	- invalid
+PageMap 0FE72000 [FB]: 20000000?	- invalid
+PageMap 0FE74000 [FB]: 20000000?	- invalid
+PageMap 0FE76000 [FB]: 20000000?	- invalid
+PageMap 0FE78000 [FB]: 20000000?	- invalid
+PageMap 0FE7A000 [FB]: 20000000?	- invalid
+PageMap 0FE7C000 [FB]: 20000000?	- invalid
+PageMap 0FE7E000 [FB]: 20000000?	- invalid
+
+PageMap 0FE80000 [FA]: 20000000?	- invalid
+PageMap 0FE82000 [FA]: 20000000?	- invalid
+PageMap 0FE84000 [FA]: 20000000?	- invalid
+PageMap 0FE86000 [FA]: 20000000?	- invalid
+PageMap 0FE88000 [FA]: 20000000?	- invalid
+PageMap 0FE8A000 [FA]: 20000000?	- invalid
+PageMap 0FE8C000 [FA]: 20000000?	- invalid
+PageMap 0FE8E000 [FA]: 20000000?	- invalid
+PageMap 0FE90000 [FA]: 20000000?	- invalid
+PageMap 0FE92000 [FA]: 20000000?	- invalid
+PageMap 0FE94000 [FA]: 20000000?	- invalid
+PageMap 0FE96000 [FA]: 20000000?	- invalid
+PageMap 0FE98000 [FA]: 20000000?	- invalid
+PageMap 0FE9A000 [FA]: 20000000?	- invalid
+PageMap 0FE9C000 [FA]: 20000000?	- invalid
+PageMap 0FE9E000 [FA]: 20000000?	- invalid
+
+# D0 = valid, writeable, not super, type 00, not accessed, not modified
+
+PageMap 0FEA0000 [F9]: D007FB00?
+PageMap 0FEA2000 [F9]: D007FB01?
+PageMap 0FEA4000 [F9]: D007FB02?
+PageMap 0FEA6000 [F9]: D007FB03?
+PageMap 0FEA8000 [F9]: D007FB04?
+PageMap 0FEAA000 [F9]: D007FB05?
+PageMap 0FEAC000 [F9]: D007FB06?
+PageMap 0FEAE000 [F9]: D007FB07?
+PageMap 0FEB0000 [F9]: D007FB08?
+PageMap 0FEB2000 [F9]: D007FB09?
+PageMap 0FEB4000 [F9]: D007FB0A?
+PageMap 0FEB6000 [F9]: D007FB0B?
+PageMap 0FEB8000 [F9]: D007FB0C?
+PageMap 0FEBA000 [F9]: D007FB0D?
+PageMap 0FEBC000 [F9]: D007FB0E?
+PageMap 0FEBE000 [F9]: D007FB0F?
+
+PageMap 0FEC0000 [FF]: 20000000?	- invalid
+PageMap 0FEC2000 [FF]: 20000000?	- invalid
+PageMap 0FEC4000 [FF]: 20000000?	- invalid
+PageMap 0FEC6000 [FF]: 20000000?	- invalid
+PageMap 0FEC8000 [FF]: 20000000?	- invalid
+PageMap 0FECA000 [FF]: 20000000?	- invalid
+PageMap 0FECC000 [FF]: 20000000?	- invalid
+PageMap 0FECE000 [FF]: 20000000?	- invalid
+PageMap 0FED0000 [FF]: 20000000?	- invalid
+PageMap 0FED2000 [FF]: 20000000?	- invalid
+PageMap 0FED4000 [FF]: 20000000?	- invalid
+PageMap 0FED6000 [FF]: 20000000?	- invalid
+PageMap 0FED8000 [FF]: 20000000?	- invalid
+PageMap 0FEDA000 [FF]: 20000000?	- invalid
+PageMap 0FEDC000 [FF]: 20000000?	- invalid
+PageMap 0FEDE000 [FF]: 20000000?	- invalid
+
+# F0 = valid, writeable, super, type 00, not accessed, not modified
+
+PageMap 0FEE0000 [F7]: F0000F70?
+PageMap 0FEE2000 [F7]: F0000F71?
+PageMap 0FEE4000 [F7]: F0000F72?
+PageMap 0FEE6000 [F7]: F0000F73?
+PageMap 0FEE8000 [F7]: F0000F74?
+PageMap 0FEEA000 [F7]: F0000F75?
+PageMap 0FEEC000 [F7]: F0000F76?
+PageMap 0FEEE000 [F7]: F0000F77?
+PageMap 0FEF0000 [F7]: D6000080?
+PageMap 0FEF2000 [F7]: D6000081?
+PageMap 0FEF4000 [F7]: D6000082?
+PageMap 0FEF6000 [F7]: D6000083?
+PageMap 0FEF8000 [F7]: D4000084?
+PageMap 0FEFA000 [F7]: D6000085?
+PageMap 0FEFC000 [F7]: D6000086?
+PageMap 0FEFE000 [F7]: D6000087?
+
+# F0 = valid, writeable, super, type 00, not accessed, not modified
+# F3 = valid, writeable, super, type 00, accessed and modified
+
+PageMap 0FF00000 [F6]: F30007FD?
+PageMap 0FF02000 [F6]: F30007FC?
+PageMap 0FF04000 [F6]: F0000F62?
+PageMap 0FF06000 [F6]: F0000F63?
+PageMap 0FF08000 [F6]: F0000F64?
+PageMap 0FF0A000 [F6]: F0000F65?
+PageMap 0FF0C000 [F6]: F0000F66?
+PageMap 0FF0E000 [F6]: F0000F67?
+PageMap 0FF10000 [F6]: F0000F68?
+PageMap 0FF12000 [F6]: F0000F69?
+PageMap 0FF14000 [F6]: F0000F6A?
+PageMap 0FF16000 [F6]: F0000F6B?
+PageMap 0FF18000 [F6]: F0000F6C?
+PageMap 0FF1A000 [F6]: F0000F6D?
+PageMap 0FF1C000 [F6]: F0000F6E?
+PageMap 0FF1E000 [F6]: F0000F6F?
+
+PageMap 0FF20000 [F5]: F0000F50?
+PageMap 0FF22000 [F5]: F0000F51?
+PageMap 0FF24000 [F5]: F0000F52?
+PageMap 0FF26000 [F5]: F0000F53?
+PageMap 0FF28000 [F5]: F0000F54?
+PageMap 0FF2A000 [F5]: F0000F55?
+PageMap 0FF2C000 [F5]: F0000F56?
+PageMap 0FF2E000 [F5]: F0000F57?
+PageMap 0FF30000 [F5]: F0000F58?
+PageMap 0FF32000 [F5]: F0000F59?
+PageMap 0FF34000 [F5]: F0000F5A?
+PageMap 0FF36000 [F5]: F0000F5B?
+PageMap 0FF38000 [F5]: F0000F5C?
+PageMap 0FF3A000 [F5]: F0000F5D?
+PageMap 0FF3C000 [F5]: F0000F5E?
+PageMap 0FF3E000 [F5]: F0000F5F?
+
+PageMap 0FF40000 [F4]: F0000F40?
+PageMap 0FF42000 [F4]: F0000F41?
+PageMap 0FF44000 [F4]: F0000F42?
+PageMap 0FF46000 [F4]: F0000F43?
+PageMap 0FF48000 [F4]: F0000F44?
+PageMap 0FF4A000 [F4]: F0000F45?
+PageMap 0FF4C000 [F4]: F0000F46?
+PageMap 0FF4E000 [F4]: F0000F47?
+PageMap 0FF50000 [F4]: F0000F48?
+PageMap 0FF52000 [F4]: F0000F49?
+PageMap 0FF54000 [F4]: F0000F4A?
+PageMap 0FF56000 [F4]: F0000F4B?
+PageMap 0FF58000 [F4]: F0000F4C?
+PageMap 0FF5A000 [F4]: F0000F4D?
+PageMap 0FF5C000 [F4]: F0000F4E?
+PageMap 0FF5E000 [F4]: F0000F4F?
+
+PageMap 0FF60000 [F3]: F0000F30?
+PageMap 0FF62000 [F3]: F0000F31?
+PageMap 0FF64000 [F3]: F0000F32?
+PageMap 0FF66000 [F3]: F0000F33?
+PageMap 0FF68000 [F3]: F0000F34?
+PageMap 0FF6A000 [F3]: F0000F35?
+PageMap 0FF6C000 [F3]: F0000F36?
+PageMap 0FF6E000 [F3]: F0000F37?
+PageMap 0FF70000 [F3]: F0000F38?
+PageMap 0FF72000 [F3]: F0000F39?
+PageMap 0FF74000 [F3]: F0000F3A?
+PageMap 0FF76000 [F3]: F0000F3B?
+PageMap 0FF78000 [F3]: F0000F3C?
+PageMap 0FF7A000 [F3]: F0000F3D?
+PageMap 0FF7C000 [F3]: F0000F3E?
+PageMap 0FF7E000 [F3]: F0000F3F?
+
+PageMap 0FF80000 [FF]: 20000000?	- invalid
+PageMap 0FF82000 [FF]: 20000000?	- invalid
+PageMap 0FF84000 [FF]: 20000000?	- invalid
+PageMap 0FF86000 [FF]: 20000000?	- invalid
+PageMap 0FF88000 [FF]: 20000000?	- invalid
+PageMap 0FF8A000 [FF]: 20000000?	- invalid
+PageMap 0FF8C000 [FF]: 20000000?	- invalid
+PageMap 0FF8E000 [FF]: 20000000?	- invalid
+PageMap 0FF90000 [FF]: 20000000?	- invalid
+PageMap 0FF92000 [FF]: 20000000?	- invalid
+PageMap 0FF94000 [FF]: 20000000?	- invalid
+PageMap 0FF96000 [FF]: 20000000?	- invalid
+PageMap 0FF98000 [FF]: 20000000?	- invalid
+PageMap 0FF9A000 [FF]: 20000000?	- invalid
+PageMap 0FF9C000 [FF]: 20000000?	- invalid
+PageMap 0FF9E000 [FF]: 20000000?	- invalid
+
+PageMap 0FFA0000 [FF]: 20000000?	- invalid
+PageMap 0FFA2000 [FF]: 20000000?	- invalid
+PageMap 0FFA4000 [FF]: 20000000?	- invalid
+PageMap 0FFA6000 [FF]: 20000000?	- invalid
+PageMap 0FFA8000 [FF]: 20000000?	- invalid
+PageMap 0FFAA000 [FF]: 20000000?	- invalid
+PageMap 0FFAC000 [FF]: 20000000?	- invalid
+PageMap 0FFAE000 [FF]: 20000000?	- invalid
+PageMap 0FFB0000 [FF]: 20000000?	- invalid
+PageMap 0FFB2000 [FF]: 20000000?	- invalid
+PageMap 0FFB4000 [FF]: 20000000?	- invalid
+PageMap 0FFB6000 [FF]: 20000000?	- invalid
+PageMap 0FFB8000 [FF]: 20000000?	- invalid
+PageMap 0FFBA000 [FF]: 20000000?	- invalid
+PageMap 0FFBC000 [FF]: 20000000?	- invalid
+PageMap 0FFBE000 [FF]: 20000000?	- invalid
+
+PageMap 0FFC0000 [FF]: 20000000?	- invalid
+PageMap 0FFC2000 [FF]: 20000000?	- invalid
+PageMap 0FFC4000 [FF]: 20000000?	- invalid
+PageMap 0FFC6000 [FF]: 20000000?	- invalid
+PageMap 0FFC8000 [FF]: 20000000?	- invalid
+PageMap 0FFCA000 [FF]: 20000000?	- invalid
+PageMap 0FFCC000 [FF]: 20000000?	- invalid
+PageMap 0FFCE000 [FF]: 20000000?	- invalid
+PageMap 0FFD0000 [FF]: 20000000?	- invalid
+PageMap 0FFD2000 [FF]: 20000000?	- invalid
+PageMap 0FFD4000 [FF]: 20000000?	- invalid
+PageMap 0FFD6000 [FF]: 20000000?	- invalid
+PageMap 0FFD8000 [FF]: 20000000?	- invalid
+PageMap 0FFDA000 [FF]: 20000000?	- invalid
+PageMap 0FFDC000 [FF]: 20000000?	- invalid
+PageMap 0FFDE000 [FF]: 20000000?	- invalid
+
+PageMap 0FFE0000 [F8]: F0000F80?
+PageMap 0FFE2000 [F8]: F0000F81?
+PageMap 0FFE4000 [F8]: F0000F82?
+PageMap 0FFE6000 [F8]: F0000F83?
+PageMap 0FFE8000 [F8]: F0000F84?
+PageMap 0FFEA000 [F8]: F0000F85?
+PageMap 0FFEC000 [F8]: F0000F86?
+PageMap 0FFEE000 [F8]: F0000F87?
+PageMap 0FFF0000 [F8]: F0000F88?
+PageMap 0FFF2000 [F8]: F3000F89?
+PageMap 0FFF4000 [F8]: F0000F8A?
+PageMap 0FFF6000 [F8]: F0000F8B?
+PageMap 0FFF8000 [F8]: F0000F8C?
+PageMap 0FFFA000 [F8]: F0000F8D?
+PageMap 0FFFC000 [F8]: F0000F8E?
+PageMap 0FFFE000 [F8]: D30007FE?
