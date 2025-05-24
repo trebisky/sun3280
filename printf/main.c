@@ -12,9 +12,8 @@
 typedef volatile unsigned short vu_short;
 typedef volatile unsigned char vu_char;
 
-// static char buf[32];
-
 /* Yields an 0.35 second delay */
+/* On the Callan */
 void
 delay_x ( void )
 {
@@ -26,6 +25,7 @@ delay_x ( void )
 }
 
 /* This should be about 1 second */
+/* On the Callan */
 void
 delay_one ( void )
 {
@@ -36,6 +36,7 @@ delay_one ( void )
 	    ;
 }
 
+/* On the Callan */
 void
 delay_ms ( int ms )
 {
@@ -46,8 +47,6 @@ delay_ms ( int ms )
 	while ( count-- )
 	    ;
 }
-
-// int bss_rubbish[4];
 
 void
 bss_clear ( unsigned int *b1, unsigned int *b2 )
@@ -150,9 +149,9 @@ run_command ( char *cmd )
 	printf ( "Command: %s\n", cmd );
 
 	// printf ( "\n" );
-	// printf ( "Command: %d:: %s\n", strlen(cmd), cmd );
+	printf ( "Command: %d:: %s\n", strlen(cmd), cmd );
 	nw = split ( cmd, wp, 8 );
-	// printf ( "nw = %d\n", nw );
+	printf ( "nw = %d\n", nw );
 }
 
 /* The 'q' to quit also needs a newline after it
@@ -165,8 +164,9 @@ user_test ( void )
 	// fill_buffer ( 0xbc );
 
 	for ( ;; ) {
-	    uart_puts ( "Ready%" );
+	    uart_puts ( "Ready% " );
 	    uart_gets ( line );
+
 	    if ( line[0] == 'q' )
 			break;
 	    if ( strlen(line) == 0 )

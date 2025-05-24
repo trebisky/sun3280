@@ -39,15 +39,13 @@ uart_init ( void )
 	/* nothing here, we rely on the boot roms */
 }
 
-#ifdef notdef
 void
 uart_stat ( void )
 {
-	struct uart *up = UART0_BASE;
+	struct scc *sp = (struct scc *) SCC_BASE;
 
-	printf ( "Uart status: %h\n", up->csr );
+	printf ( "Uart status: %h\n", sp->csr_a );
 }
-#endif
 
 void
 uart_putc ( int cc )
@@ -75,6 +73,10 @@ uart_getc ( void )
 
 		if ( rv == '\r' )
 			rv = '\n';
+
+		/* Things are nicer when we echo */
+		uart_putc ( rv );
+
 		return rv;
 }
 
