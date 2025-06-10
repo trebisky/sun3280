@@ -12,3 +12,4 @@ Here are the projects
 1. puller - python script to download mmu setup
 1. libgcc - steal some things from libgcc
 1. printf - printf and improved C startup
+1. diags - sun diagnostics

@@ -6,7 +6,8 @@
 #CC = m68k-linux-gnu-gcc -m68020 -O2 -fno-builtin
 CC = m68k-linux-gnu-gcc -m68020 -fno-builtin
 
-AS = m68k-linux-gnu-as -m68020
+#AS = m68k-linux-gnu-as -m68020
+AS = m68k-linux-gnu-as -m68020 --register-prefix-optional
 LD = m68k-linux-gnu-ld --no-warn-rwx-segments
 DUMP = m68k-linux-gnu-objdump -d
 

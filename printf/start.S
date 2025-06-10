@@ -47,6 +47,18 @@ wr_diag:
 	movec %a0,%dfc
 	rts
 
+# jra is an assembler pseudo that lets
+#  the assembler use bra or jmp as it
+#  finds is best.
+spin:	jra  spin
+
+# This ends up 2 words
+#  (as a PC relative jump interestingly)
+#  even though a short bra would do.
+spin2:	jmp	 spin2
+
+		movl    d6,sp@-
+
 /*
 loop:	bra	loop
 */
